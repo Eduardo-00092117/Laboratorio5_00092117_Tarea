@@ -4,9 +4,11 @@ import android.app.ProgressDialog
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.example.pokedeskfragment.R
 import com.example.pokedeskfragment.data.imageData
 import com.example.pokedeskfragment.utilities.NetworkUtil
@@ -93,6 +95,8 @@ class pokeFragmentOne : Fragment() {
     inner class FetchPokemonTask : AsyncTask<String, Void, String>(){
         lateinit var pDialog : ProgressDialog
 
+        lateinit var image : String
+
         override fun onPreExecute() {
             super.onPreExecute()
             pDialog = ProgressDialog(viewGlobal.context)
@@ -109,14 +113,19 @@ class pokeFragmentOne : Fragment() {
                 result = "[" + result + "]";
                 pokeArray = pokeParse.parse(result).asJsonArray;
 
-                for (i in 0 .. (pokeArray.size()-1)){
-                    var pokeElement : JsonElement = pokeArray.get(i)
-                    pokeOb = pokeElement.asJsonObject
-                    peso = pokeOb.get("weight").asDouble /10
-                    alto = pokeOb.get("height").asInt *10
-                    base = pokeOb.get("base_experience").asInt
-                    type = pokeOb.get("types").asJsonArray
-                    stats = pokeOb.get("stats").asJsonArray
+                var pokeElement : JsonElement = pokeArray.get(0)
+                pokeOb = pokeElement.asJsonObject
+                peso = pokeOb.get("weight").asDouble /10
+                alto = pokeOb.get("height").asInt *10
+                base = pokeOb.get("base_experience").asInt
+                type = pokeOb.get("types").asJsonArray
+                stats = pokeOb.get("stats").asJsonArray
+                if (pokeOb.get("sprites").asJsonObject.get("front_default").asString != null){
+                    image = pokeOb.get("sprites").asJsonObject.get("front_default").asString
+                    Log.d("Hola", image)
+                } else{
+                    image = pokeOb.get("sprites").asJsonObject.get("front_female").asString
+                    Log.d("Hola", image)
                 }
 
                 return result
@@ -139,7 +148,6 @@ class pokeFragmentOne : Fragment() {
                 viewGlobal.tv_experiencia_poke.text = "Base experience: " + base
 
                 var datoE : ArrayList<Int> = ArrayList()
-
                 for (i in 0 .. (type.size()-1)){
                     typeIS = type.get(i).toString()
                     typeOb = pokePa.parse(typeIS).asJsonObject
@@ -185,9 +193,8 @@ class pokeFragmentOne : Fragment() {
 
                 viewGlobal.tv_tipo.text = "Type: "+cantTipo
             }
-
+            //Glide.with(viewGlobal.context).load(image).into(viewGlobal.tv_pokeImage2)
             pDialog.dismiss()
         }
-
     }
 }

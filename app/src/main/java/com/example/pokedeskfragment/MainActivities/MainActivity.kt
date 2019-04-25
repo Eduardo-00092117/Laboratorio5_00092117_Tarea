@@ -95,6 +95,8 @@ class MainActivity : AppCompatActivity(), pokeFragmentAll.pokeListener{
     //Funcion para volver a cargar los datos del sitio web
     override fun recargar() {
         listado.clear()
+        listadoSearch.clear()
+        search = ""
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
             initFragmentOne("", "")
         }
@@ -115,7 +117,9 @@ class MainActivity : AppCompatActivity(), pokeFragmentAll.pokeListener{
     }
 
     //Funcion global que sirve para ir agregando los fragmentos en su correspondientes viewGroup.
-    private fun agregateFragment(view : Int, fragment : Fragment) = supportFragmentManager.beginTransaction().replace(view, fragment).commit()
+    private fun agregateFragment(view : Int, fragment : Fragment){
+        supportFragmentManager.beginTransaction().replace(view, fragment).commit()
+    }
 
     //En esta clase asincrona es donde los datos son buscados en la URL y luego guardados en unas listas para ser ocupados donde se le necesite.
     inner class FetchPokemonTask : AsyncTask<String, Void, String>(){
@@ -136,10 +140,7 @@ class MainActivity : AppCompatActivity(), pokeFragmentAll.pokeListener{
                 var result = NetworkUtil.getResponseFromHttpUrl(url)
                 var gson = Gson()
                 var element = gson.fromJson(result, pokeResultInfo::class.java)
-                for(i in 0 .. (element.results.size-1)){
-                    var datosU = pokemonResul(element.results[i].name, element.results[i].url)
-                    listado.add(datosU)
-                }
+                listado = element.results
                 return ""
             } catch (e : IOException){
                 e.printStackTrace()

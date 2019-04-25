@@ -14,8 +14,8 @@
         android:padding="@dimen/size_medium"
         android:background="#2D5F13"
         android:textColor="#fff"
-        android:layout_marginBottom="@dimen/size_medium"
-        android:layout_marginTop="@dimen/size_medium"
+        android:layout_marginBottom="@dimen/size_low"
+        android:layout_marginTop="@dimen/size_low"
         android:text=""/>
 
 </LinearLayout>

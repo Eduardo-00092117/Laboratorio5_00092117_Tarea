@@ -15,9 +15,7 @@ class pokeInfo : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_poke_info)
 
-        var mIntent : Intent = intent
-
-        initFragmentOne(mIntent.getStringExtra("nombre"), mIntent.getStringExtra("url"))
+        initFragmentOne(intent.getStringExtra("nombre"), intent.getStringExtra("url"))
 
         tv_cerrar.setOnClickListener{
              onBackPressed()

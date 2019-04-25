@@ -21,6 +21,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableBottom="@drawable/poke"/>
+            <ImageView
+                    android:id="@+id/tv_pokeImage2"
+                    android:layout_width="match_parent"
+                    android:layout_height="112dp"
+                    android:visibility="gone"/>
 
             <TextView
                     android:id="@+id/tv_label_touch"

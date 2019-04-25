@@ -12,7 +12,7 @@ class NetworkUtil{
         @JvmStatic val POKE_API_BASE_URL : String = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1000"
 
         @JvmStatic fun buiURL() : URL{
-            var uri : Uri = Uri.parse(NetworkUtil.POKE_API_BASE_URL).buildUpon().build()
+            var uri : Uri = Uri.parse(POKE_API_BASE_URL).buildUpon().build()
 
             lateinit var url : URL
 
@@ -44,7 +44,7 @@ class NetworkUtil{
             try {
                 var ing : InputStream = urlConnection.inputStream
 
-                var scanner : Scanner = Scanner(ing)
+                var scanner = Scanner(ing)
                 scanner.useDelimiter("\\A")
 
                 var hasInput : Boolean = scanner.hasNext()

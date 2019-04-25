@@ -12,7 +12,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import com.example.pokedeskfragment.MainActivities.MainActivity
 import com.example.pokedeskfragment.R
 import com.example.pokedeskfragment.data.pokemonResul
 import com.example.pokedeskfragment.model.AdapterDatos
@@ -69,8 +68,6 @@ class pokeFragmentAll : Fragment() {
 
         var orientation = resources.configuration.orientation
 
-        view.tv_nothing.visibility = View.GONE
-
         view.et_name_pokemon.setText(search)
 
         view.btn_search.setOnClickListener{
@@ -96,10 +93,16 @@ class pokeFragmentAll : Fragment() {
             }
         }
 
-        if (listadoSearch.size != 0){
+        if (search != ""){
             initRecycler(orientation, listadoSearch)
         } else{
             initRecycler(orientation, listado)
+        }
+
+        if(listadoSearch.size == 0 && search != ""){
+            view.tv_nothing.visibility = View.VISIBLE
+        } else{
+            view.tv_nothing.visibility = View.GONE
         }
 
         return view
@@ -124,7 +127,7 @@ class pokeFragmentAll : Fragment() {
             adapterIni = AdapterDatos(listado, {pokemon:pokemonResul->listenerTool?.landscapeClickListener(pokemon)})
         }
 
-        viewGlobal.rv_pokemon.apply {
+        viewGlobal. rv_pokemon.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             adapter = adapterIni
